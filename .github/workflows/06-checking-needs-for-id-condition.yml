@@ -27,7 +27,7 @@ jobs:
           mvn --version
           mvn clean package
       - name: Build the Docker image
-        run: docker build --tag vigneshsweekaran/hello-world-github-actions:$GITHUB_RUN_NUMBER .
+        run: docker build --tag demyank88/hello-world-github-actions:$GITHUB_RUN_NUMBER .
 
       - name: Login to Docker Hub
         uses: docker/login-action@v1
@@ -36,7 +36,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
       - name: Push Docker Image
-        run: docker push vigneshsweekaran/hello-world-github-actions:$GITHUB_RUN_NUMBER
+        run: docker push demyank88/hello-world-github-actions:$GITHUB_RUN_NUMBER
 
   pre-deploy:
     name: Pre-Deploy
@@ -79,7 +79,7 @@ jobs:
           envs: TAG
           script: |
             docker rm -f hello-world-dev || true
-            docker run --name hello-world-${{ needs.pre-deploy.outputs.environment-name }} -d -p 9003:8080 vigneshsweekaran/hello-world-github-actions:$TAG
+            docker run --name hello-world-${{ needs.pre-deploy.outputs.environment-name }} -d -p 9003:8080 demyank88/hello-world-github-actions:$TAG
            
   Test:
     runs-on: ubuntu-latest

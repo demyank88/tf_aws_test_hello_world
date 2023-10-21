@@ -23,7 +23,7 @@ pipeline {
         stage('Docker Build') {
             steps {
                 script {
-                    docker.build("vigneshsweekaran/hello-world:${TAG}")
+                    docker.build("demyank88/hello-world:${TAG}")
                 }
             }
         }
@@ -31,8 +31,8 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'docker_credential') {
-                        docker.image("vigneshsweekaran/hello-world:${TAG}").push()
-                        docker.image("vigneshsweekaran/hello-world:${TAG}").push("latest")
+                        docker.image("demyank88/hello-world:${TAG}").push()
+                        docker.image("demyank88/hello-world:${TAG}").push("latest")
                     }
                 }
             }

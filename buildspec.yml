@@ -3,23 +3,26 @@ version: 0.2
 env:
   variables:
     IMAGE_REPO_NAME: "hello-world"
-    AWS_ACCOUNT_ID: "616853969531"
+    AWS_ACCOUNT_ID: "522816884990"
   parameter-store:
     DOCKER_PASSWORD: /codeBuild/dockerPassword
 
 phases:
   install:
     runtime-versions:
-      java: corretto8
+      java: corretto17
     commands:
       - yum install -y maven
+      - wget https://downloads.apache.org/maven/maven-3/3.8.8/binaries/apache-maven-3.8.8-bin.tar.gz
+      - tar xzvf apache-maven-3.8.8-bin.tar.gz
+      - export PATH=$PATH:`pwd`/apache-maven-3.8.8/bin
     finally:
       - java -version
       - mvn --version
   pre_build:
     commands:
       - echo Logging in to Dockerhub for docker pull limit...
-      - docker login -u vigneshsweekaran -p $DOCKER_PASSWORD
+      - docker login -u demyank88 -p $DOCKER_PASSWORD
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
   build:

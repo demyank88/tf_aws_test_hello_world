@@ -24,7 +24,7 @@ for (pipelineDetail in pipelineDetails) {
           git {
             branch('main')
             remote{
-              url('https://github.com/vigneshsweekaran/hello-world.git')
+              url('https://github.com/demyank88/hello-world.git')
             }
           }
         }

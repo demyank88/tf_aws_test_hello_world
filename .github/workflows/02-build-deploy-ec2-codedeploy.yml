@@ -26,7 +26,7 @@ jobs:
           mvn --version
           mvn clean package
       - name: Build the Docker image
-        run: docker build --tag vigneshsweekaran/hello-world-github-actions:$GITHUB_RUN_NUMBER .
+        run: docker build --tag demyank88/hello-world-github-actions:$GITHUB_RUN_NUMBER .
 
       - name: Login to Docker Hub
         uses: docker/login-action@v1
@@ -35,7 +35,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
       - name: Push Docker Image
-        run: docker push vigneshsweekaran/hello-world-github-actions:$GITHUB_RUN_NUMBER
+        run: docker push demyank88/hello-world-github-actions:$GITHUB_RUN_NUMBER
         
       - name: Deploying to Dev environment
         uses: appleboy/ssh-action@master
@@ -49,7 +49,7 @@ jobs:
           envs: TAG
           script: |
             docker rm -f hello-world-dev || true
-            docker run --name hello-world-dev -d -p 9003:8080 vigneshsweekaran/hello-world-github-actions:$TAG
+            docker run --name hello-world-dev -d -p 9003:8080 demyank88/hello-world-github-actions:$TAG
             
   continuous-deployment:
       runs-on: ubuntu-latest
@@ -61,7 +61,7 @@ jobs:
           with:
             aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
             aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            aws-region: ap-southeast-1
+            aws-region: ap-northeast-2
 
         - name: Create CodeDeploy Deployment
           id: deploy

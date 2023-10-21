@@ -22,7 +22,7 @@ pipeline {
         stage('Docker Build') {
             steps {
                 script {
-                    docker.build("vigneshsweekaran/hello-world:${TAG}")
+                    docker.build("demyank88/hello-world:${TAG}")
                 }
             }
         }
@@ -30,8 +30,8 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'docker_credential') {
-                        docker.image("vigneshsweekaran/hello-world:${TAG}").push()
-                        docker.image("vigneshsweekaran/hello-world:${TAG}").push("latest")
+                        docker.image("demyank88/hello-world:${TAG}").push()
+                        docker.image("demyank88/hello-world:${TAG}").push("latest")
                     }
                 }
             }
@@ -42,11 +42,11 @@ pipeline {
                     sh '''ssh -i $SSH_PRIVATE_KEY_PATH -o StrictHostKeyChecking=no ubuntu@jenkins.oc.devopspilot.com <<ENDSSH
                         docker stop hello-world | true
                         docker rm hello-world | true
-                        docker run --name hello-world -d -p 9004:8080 vigneshsweekaran/hello-world:${TAG}
+                        docker run --name hello-world -d -p 9004:8080 demyank88/hello-world:${TAG}
 ENDSSH
                     '''
                     // Second way of putting the commands in single sh step
-                    // sh "ssh -i $SSH_PRIVATE_KEY_PATH -o StrictHostKeyChecking=no ubuntu@dayal-test.letspractice.tk 'docker stop hello-world | true && docker rm hello-world | true && docker run --name hello-world -d -p 9004:8080 vigneshsweekaran/hello-world:${TAG}'"
+                    // sh "ssh -i $SSH_PRIVATE_KEY_PATH -o StrictHostKeyChecking=no ubuntu@dayal-test.letspractice.tk 'docker stop hello-world | true && docker rm hello-world | true && docker run --name hello-world -d -p 9004:8080 demyank88/hello-world:${TAG}'"
                 }
             }
         }
